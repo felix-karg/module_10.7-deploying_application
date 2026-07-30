@@ -66,3 +66,26 @@ Deploy MongoDB and Mongo Express into local K8s cluster
 18. Verify: `kubectl get configmap`
 19. Create Deployment: `kubectl apply -f mongo-express.yaml` (again must be created before deployment as it's referenced there)
 20. Verify: `kubectl get pod`
+21. Add Service to 'mongo-express.yaml':
+    ```
+    ---
+    apiVersion: v1
+    kind: Service
+    metadata:
+    name: mongo-express-service
+    spec:
+    selector:
+        app: mongo-express
+    type: LoadBalancer
+    ports:
+    - protocol: TCP
+        port: 8081
+        targetPort: 8081
+        nodePort: 30000
+    ```
+    To make this an external service you need to add `type: LoadBalancer` and `nodePort` (the port where external service is reachable from outside)
+22. Create Service: `kubectl apply -f mongo-express.yaml`
+23. Verify: `kubectl get service`
+24. Open browser at `localhost:8081` (port is shown in `kubectl get pod` output)
+25. View logs with `kubectl logs <mongo-express-pod-name>` and retrieve credentials there
+26. Login to Mongo Express UI
