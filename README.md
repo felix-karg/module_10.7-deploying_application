@@ -52,3 +52,17 @@ Deploy MongoDB and Mongo Express into local K8s cluster
     ```
 12. Create service: `kubectl apply -f mongo.yaml`
 13. Verify: `kubectl get service`
+14. Add YAML for Mongo Express deployment ('mongo-express.yaml' in this repository)
+15. Add YAML for ConfigMap ('mongo-configmap.yaml' in this repository) to store environmental variable(s) there
+16. Reference value from ConfigMap in env-block of deployment:
+    ```
+    - name: database_url
+        valueFrom:
+        configMapKeyRef:
+            name: mongodb-configmap
+            key: database_url
+    ```
+17. Create ConfigMap: `kubectl apply -f mongo-configmap.yaml` (again must be created before deployment as it's referenced there)
+18. Verify: `kubectl get configmap`
+19. Create Deployment: `kubectl apply -f mongo-express.yaml` (again must be created before deployment as it's referenced there)
+20. Verify: `kubectl get pod`
