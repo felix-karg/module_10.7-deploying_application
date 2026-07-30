@@ -33,3 +33,22 @@ Deploy MongoDB and Mongo Express into local K8s cluster
             name: mongodb-secret
             key: mongo-root-password
     ```
+9. Create deployment: `kubectl apply -f mongo.yaml`
+10. Verify: `kubectl get deployment`
+11. Use `---` as separator and add service to mongo.yaml:
+    ```
+    ---
+    apiVersion: v1
+    kind: Service
+    metadata:
+    name: mongodb-service
+    spec:
+    selector:
+        app: mongodb
+    ports:
+    - protocol: TCP
+        port: 27017
+        targetPort: 27017
+    ```
+12. Create service: `kubectl apply -f mongo.yaml`
+13. Verify: `kubectl get service`
