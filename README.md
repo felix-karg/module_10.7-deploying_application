@@ -12,4 +12,5 @@ Deploy MongoDB and Mongo Express into local K8s cluster
 - Deploy MongoDB and Mongo Express with configuration and credentials extracted into ConfigMap and Secret
 
 ## Implementation Steps:
-1. 
+1. Add YAML file for deployment ('mongo.yaml' in this repository')
+2. 
